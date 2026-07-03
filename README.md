@@ -2,7 +2,7 @@
 
 Sitio web estático de exhibición para **Black & White**, marca de joyería y accesorios de diseño exclusivo, hecho a mano. Desarrollado con HTML, CSS y JavaScript vanilla — sin frameworks ni herramientas de build.
 
-**Live:** https://dajozu2513.github.io/black-and-white-joel
+**Live:** [https://dajozu2513.github.io/black-and-white-joel](https://dajozu2513.github.io/Proyecto-Black-White/)
 
 ---
 
