@@ -1,59 +1,57 @@
 # Black & White by Joel Soto
 
-Sitio web estático de exhibición para **Black & White**, marca de joyería y accesorios de diseño exclusivo, hecho a mano. Desarrollado con HTML, CSS y JavaScript vanilla — sin frameworks ni herramientas de build.
-
-**Live:** [https://dajozu2513.github.io/black-and-white-joel](https://dajozu2513.github.io/Proyecto-Black-White/)
+Static showcase website for **Black & White**, a brand of exclusive, handmade jewelry and design accessories. Built with vanilla HTML, CSS, and JavaScript — no frameworks or build tools.
 
 ---
 
-## Tecnologías
+## Technologies
 
 - HTML5 / CSS3 / JavaScript (ES6+)
 - Google Fonts: Cormorant Garamond + Montserrat
 - GitHub Pages (deploy)
 
-## Estructura
+## Structure
 
 ```
-index.html               — markup principal
-css/styles.css           — estilos globales, animaciones y responsive
-js/main.js               — interactividad (intro, parallax, carrusel, modal)
-articles/                — artículos editoriales de la marca
+index.html               — main markup
+css/styles.css           — global styles, animations, and responsive design
+js/main.js               — interactivity (intro, parallax, carousel, modal)
+articles/                — brand editorial articles
 pictures/
-  background/            — imágenes hero y separador parallax
-  products/              — 9 imágenes de productos
-og.jpg                   — imagen Open Graph / Twitter Card
+  background/            — hero and parallax divider images
+  products/               — 9 product images
+og.jpg                    — Open Graph / Twitter Card image
 ```
 
-## Secciones
+## Sections
 
-1. **Intro screen** — splash de marca a pantalla completa, se elimina a los 2 s
-2. **Header fijo** — gana clase `.scrolled` al bajar 60 px
-3. **Hero** — viewport completo con parallax en `chain.JPG`
-4. **Pilares** — tres declaraciones de marca con animación on-scroll
-5. **Separador** — divider parallax
-6. **Colección** — carrusel de 9 productos con modal de detalle y CTA de WhatsApp
-7. **Footer** — nombre de marca y copyright
+1. **Intro screen** — full-screen brand splash, dismissed after 2 s
+2. **Fixed header** — gains `.scrolled` class after 60 px of scroll
+3. **Hero** — full-viewport section with parallax on `chain.JPG`
+4. **Pillars** — three brand statements with on-scroll animation
+5. **Divider** — parallax separator
+6. **Collection** — carousel of 9 products with a detail modal and WhatsApp CTA
+7. **Footer** — brand name and copyright
 
-## Correr localmente
+## Run Locally
 
 ```bash
-# Opción 1 — servidor Node incluido (resuelve todos los asset paths)
+# Option 1 — included Node server (resolves all asset paths)
 node .claude/server.js
-# Acceder en http://localhost:8081
+# Access at http://localhost:8081
 
-# Opción 2 — npx serve
+# Option 2 — npx serve
 npx serve . -l 8080
 ```
 
-También se puede abrir `index.html` directamente en el browser.
+`index.html` can also be opened directly in the browser.
 
-## Productos
+## Products
 
 Void · Star · Monolith · Static · Together · Meridian · Heart · Echo · Snake
 
-Cada producto tiene descripción poética en español y enlace de WhatsApp pre-configurado.
+Each product has a poetic description in Spanish and a pre-configured WhatsApp link.
 
 ---
 
-Desarrollado por **Joel Soto** — Costa Rica
+Developed by **Joel Soto** — Costa Rica
