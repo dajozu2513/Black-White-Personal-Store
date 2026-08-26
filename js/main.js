@@ -96,15 +96,42 @@
 
   // ── PRODUCT MODAL ──
   const PRODUCTS = {
-    'Void':     { desc: 'El eslabón más honesto que existe, sin ruido ni adornos. Solo la forma en su estado más puro. Existir así de claro es casi un acto de rebeldía.', wa: 'https://wa.me/50660062513?text=Hola%2C%20tengo%20inter%C3%A9s%20en%20la%20cadena%20*Void*.%20Quisiera%20una%20pieza%3A%20' },
-    'Star':     { desc: 'Pequeña, constante, imposible de ignorar. Lleva esa misma tensión del universo que no necesita volumen para hacerse sentir.', wa: 'https://wa.me/50660062513?text=Hola%2C%20tengo%20inter%C3%A9s%20en%20la%20cadena%20*Star*.%20Quisiera%20una%20pieza%3A%20' },
-    'Monolith': { desc: 'Hay cosas que no piden permiso para existir. Esta cadena es una de ellas. Sólida, sin disculpas, sin necesidad de explicación.', wa: 'https://wa.me/50660062513?text=Hola%2C%20tengo%20inter%C3%A9s%20en%20la%20cadena%20*Monolith*.%20Quisiera%20una%20pieza%3A%20' },
-    'Static':   { desc: 'El momento exacto antes de que todo tenga sentido o deje de tenerlo. Esa frecuencia entre el orden y el caos, hecha acero.', wa: 'https://wa.me/50660062513?text=Hola%2C%20tengo%20inter%C3%A9s%20en%20la%20cadena%20*Static*.%20Quisiera%20una%20pieza%3A%20' },
-    'Together': { desc: 'Dos hilos que no se buscan, se encuentran. No se necesitan para existir, pero juntos dicen algo que ninguno puede decir solo.', wa: 'https://wa.me/50660062513?text=Hola%2C%20tengo%20inter%C3%A9s%20en%20la%20cadena%20*Together*.%20Quisiera%20una%20pieza%3A%20' },
-    'Meridian': { desc: 'La línea que separa lo conocido de lo que aún no tiene nombre. Precisa, inevitable, imposible de ignorar.', wa: 'https://wa.me/50660062513?text=Hola%2C%20tengo%20inter%C3%A9s%20en%20la%20cadena%20*Meridian*.%20Quisiera%20una%20pieza%3A%20' },
-    'Heart':    { desc: 'No el corazón que siente. El que resiste. El que sigue latiendo aunque nadie lo vea, aunque nadie lo escuche.', wa: 'https://wa.me/50660062513?text=Hola%2C%20tengo%20inter%C3%A9s%20en%20la%20cadena%20*Heart*.%20Quisiera%20una%20pieza%3A%20' },
-    'Echo':     { desc: 'Lo que dijiste ya no está pero su forma permanece. Cada eslabón repite al anterior sin agotarse, sin olvidar.', wa: 'https://wa.me/50660062513?text=Hola%2C%20tengo%20inter%C3%A9s%20en%20la%20cadena%20*Echo*.%20Quisiera%20una%20pieza%3A%20' },
-    'Snake':    { desc: 'No rastrea. Fluye. Lleva consigo algo antiguo que todavía no tiene nombre, y probablemente nunca lo necesite.', wa: 'https://wa.me/50660062513?text=Hola%2C%20tengo%20inter%C3%A9s%20en%20la%20cadena%20*Snake*.%20Quisiera%20una%20pieza%3A%20' }
+    'Void':     {
+      es: { desc: 'El eslabón más honesto que existe, sin ruido ni adornos. Solo la forma en su estado más puro. Existir así de claro es casi un acto de rebeldía.', waText: 'Hola, tengo interés en la cadena *Void*. Quisiera una pieza: ' },
+      en: { desc: 'The most honest link there is, no noise or ornament. Just form in its purest state. Existing this clearly is almost an act of rebellion.', waText: "Hi, I'm interested in the *Void* chain. I'd like to order a piece: " }
+    },
+    'Star':     {
+      es: { desc: 'Pequeña, constante, imposible de ignorar. Lleva esa misma tensión del universo que no necesita volumen para hacerse sentir.', waText: 'Hola, tengo interés en la cadena *Star*. Quisiera una pieza: ' },
+      en: { desc: "Small, constant, impossible to ignore. It carries the same tension as the universe, one that never needs volume to make itself felt.", waText: "Hi, I'm interested in the *Star* chain. I'd like to order a piece: " }
+    },
+    'Monolith': {
+      es: { desc: 'Hay cosas que no piden permiso para existir. Esta cadena es una de ellas. Sólida, sin disculpas, sin necesidad de explicación.', waText: 'Hola, tengo interés en la cadena *Monolith*. Quisiera una pieza: ' },
+      en: { desc: "Some things don't ask permission to exist. This chain is one of them. Solid, unapologetic, needing no explanation.", waText: "Hi, I'm interested in the *Monolith* chain. I'd like to order a piece: " }
+    },
+    'Static':   {
+      es: { desc: 'El momento exacto antes de que todo tenga sentido o deje de tenerlo. Esa frecuencia entre el orden y el caos, hecha acero.', waText: 'Hola, tengo interés en la cadena *Static*. Quisiera una pieza: ' },
+      en: { desc: 'The exact moment before everything starts making sense, or stops. That frequency between order and chaos, made steel.', waText: "Hi, I'm interested in the *Static* chain. I'd like to order a piece: " }
+    },
+    'Together': {
+      es: { desc: 'Dos hilos que no se buscan, se encuentran. No se necesitan para existir, pero juntos dicen algo que ninguno puede decir solo.', waText: 'Hola, tengo interés en la cadena *Together*. Quisiera una pieza: ' },
+      en: { desc: "Two threads that don't seek each other out, they meet. Neither needs the other to exist, but together they say something neither can say alone.", waText: "Hi, I'm interested in the *Together* chain. I'd like to order a piece: " }
+    },
+    'Meridian': {
+      es: { desc: 'La línea que separa lo conocido de lo que aún no tiene nombre. Precisa, inevitable, imposible de ignorar.', waText: 'Hola, tengo interés en la cadena *Meridian*. Quisiera una pieza: ' },
+      en: { desc: 'The line that separates what is known from what has no name yet. Precise, inevitable, impossible to ignore.', waText: "Hi, I'm interested in the *Meridian* chain. I'd like to order a piece: " }
+    },
+    'Heart':    {
+      es: { desc: 'No el corazón que siente. El que resiste. El que sigue latiendo aunque nadie lo vea, aunque nadie lo escuche.', waText: 'Hola, tengo interés en la cadena *Heart*. Quisiera una pieza: ' },
+      en: { desc: 'Not the heart that feels. The one that endures. The one that keeps beating even when no one sees it, even when no one hears it.', waText: "Hi, I'm interested in the *Heart* chain. I'd like to order a piece: " }
+    },
+    'Echo':     {
+      es: { desc: 'Lo que dijiste ya no está pero su forma permanece. Cada eslabón repite al anterior sin agotarse, sin olvidar.', waText: 'Hola, tengo interés en la cadena *Echo*. Quisiera una pieza: ' },
+      en: { desc: "What you said is gone, but its shape remains. Every link repeats the last one, never tiring, never forgetting.", waText: "Hi, I'm interested in the *Echo* chain. I'd like to order a piece: " }
+    },
+    'Snake':    {
+      es: { desc: 'No rastrea. Fluye. Lleva consigo algo antiguo que todavía no tiene nombre, y probablemente nunca lo necesite.', waText: 'Hola, tengo interés en la cadena *Snake*. Quisiera una pieza: ' },
+      en: { desc: "It doesn't crawl. It flows. It carries something ancient that still has no name, and probably never will need one.", waText: "Hi, I'm interested in the *Snake* chain. I'd like to order a piece: " }
+    }
   };
 
   const modal     = document.getElementById('productModal');
@@ -113,14 +140,24 @@
   const modalDesc = document.getElementById('modalDesc');
   const modalBtn  = document.getElementById('modalBtn');
 
-  function openModal(name, imgSrc) {
+  let currentProduct = null;
+
+  function renderModal(name) {
     const p = PRODUCTS[name];
     if (!p) return;
-    modalImg.src          = imgSrc;
-    modalImg.alt          = name;
+    const lang = window.BWI18N ? window.BWI18N.getLang() : 'es';
+    const copy = p[lang] || p.es;
     modalName.textContent = name;
-    modalDesc.textContent = p.desc;
-    modalBtn.href         = p.wa;
+    modalDesc.textContent = copy.desc;
+    modalBtn.href         = 'https://wa.me/50660062513?text=' + encodeURIComponent(copy.waText);
+  }
+
+  function openModal(name, imgSrc) {
+    if (!PRODUCTS[name]) return;
+    currentProduct = name;
+    modalImg.src = imgSrc;
+    modalImg.alt = name;
+    renderModal(name);
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -129,6 +166,10 @@
     modal.classList.remove('open');
     document.body.style.overflow = '';
   }
+
+  document.addEventListener('bw-lang-change', () => {
+    if (currentProduct && modal.classList.contains('open')) renderModal(currentProduct);
+  });
 
   document.getElementById('modalClose').addEventListener('click', closeModal);
   modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });

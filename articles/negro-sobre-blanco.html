@@ -18,34 +18,74 @@
       <span class="brand-sub">by Joel Soto</span>
     </div>
   </a>
-  <div class="header-tag">Diseño &bull; Exclusivo</div>
+  <div class="header-right">
+    <div class="header-tag" data-i18n="header.tag">Diseño &bull; Exclusivo</div>
+    <div class="lang-toggle" id="langToggle" role="group" aria-label="Idioma / Language">
+      <button type="button" class="lang-opt" data-lang="es">ES</button>
+      <button type="button" class="lang-opt" data-lang="en">EN</button>
+    </div>
+  </div>
 </header>
 
 <div class="article-hero">
-  <span class="article-hero-cat">Estética</span>
-  <h1 class="article-hero-title">Negro sobre blanco</h1>
+  <span class="article-hero-cat" data-i18n="cat">Estética</span>
+  <h1 class="article-hero-title" data-i18n="title">Negro sobre blanco</h1>
 </div>
 
 <article class="article-body">
-  <a href="../index.html" class="article-back">← Volver</a>
+  <a href="../index.html" class="article-back" data-i18n="back">← Volver</a>
 
-  <p>El negro y el blanco son, técnicamente, la ausencia y la suma de todos los colores. En la práctica, son otra cosa: son una postura.</p>
+  <p data-i18n="p1">El negro y el blanco son, técnicamente, la ausencia y la suma de todos los colores. En la práctica, son otra cosa: son una postura.</p>
 
-  <p>Elegir trabajar únicamente en blanco y negro no es una limitación. Es una decisión radical. Significa que no te vas a apoyar en el color para llamar la atención, para crear emoción, para esconder errores. Lo que tienes es la forma. Solo la forma. Y tiene que ser suficiente.</p>
+  <p data-i18n="p2">Elegir trabajar únicamente en blanco y negro no es una limitación. Es una decisión radical. Significa que no te vas a apoyar en el color para llamar la atención, para crear emoción, para esconder errores. Lo que tienes es la forma. Solo la forma. Y tiene que ser suficiente.</p>
 
-  <p>Las marcas más duraderas de la historia visual entendieron esto antes que nadie. Coco Chanel construyó un universo entero sobre el contraste entre el negro y el blanco. No porque no pudiera usar color, sino porque entendió que el contraste máximo genera la tensión máxima, y la tensión es lo que hace que no puedas dejar de mirar.</p>
+  <p data-i18n="p3">Las marcas más duraderas de la historia visual entendieron esto antes que nadie. Coco Chanel construyó un universo entero sobre el contraste entre el negro y el blanco. No porque no pudiera usar color, sino porque entendió que el contraste máximo genera la tensión máxima, y la tensión es lo que hace que no puedas dejar de mirar.</p>
 
-  <p>Hay algo en el ojo humano que no puede ignorar el contraste. Es una respuesta primitiva, anterior al gusto y a la educación estética. El negro sobre blanco activa algo en nosotros que el color nunca logra de la misma manera.</p>
+  <p data-i18n="p4">Hay algo en el ojo humano que no puede ignorar el contraste. Es una respuesta primitiva, anterior al gusto y a la educación estética. El negro sobre blanco activa algo en nosotros que el color nunca logra de la misma manera.</p>
 
-  <p>Pero más allá de la psicología visual, existe una razón filosófica para esta paleta. El mundo está lleno de ruido, de colores que gritan, de estímulos que compiten por tu atención. Moverse en blanco y negro es una forma de decir: aquí no hay distracción. Aquí solo hay lo esencial.</p>
+  <p data-i18n="p5">Pero más allá de la psicología visual, existe una razón filosófica para esta paleta. El mundo está lleno de ruido, de colores que gritan, de estímulos que compiten por tu atención. Moverse en blanco y negro es una forma de decir: aquí no hay distracción. Aquí solo hay lo esencial.</p>
 
-  <p>La joyería en acero vive naturalmente en este espacio. Un metal que refleja la luz sin añadir color. Una superficie que no interpreta, solo muestra. En la muñeca, en el cuello, contra cualquier piel: el acero es siempre contraste, siempre tensión. Esa es la única estética que nos interesa.</p>
+  <p data-i18n="p6">La joyería en acero vive naturalmente en este espacio. Un metal que refleja la luz sin añadir color. Una superficie que no interpreta, solo muestra. En la muñeca, en el cuello, contra cualquier piel: el acero es siempre contraste, siempre tensión. Esa es la única estética que nos interesa.</p>
 </article>
 
 <footer>
   <div class="footer-brand">Black &amp; White &mdash; Joel Soto</div>
-  <div class="footer-copy">&copy; 2026 &bull; Todos los derechos reservados</div>
+  <div class="footer-copy" data-i18n="footer.copy">&copy; 2026 &bull; Todos los derechos reservados</div>
 </footer>
+
+<script src="../js/i18n.js"></script>
+<script>
+BWI18N.init({
+  es: {
+    'header.tag': 'Diseño • Exclusivo',
+    'cat': 'Estética',
+    'title': 'Negro sobre blanco',
+    'back': '← Volver',
+    'p1': 'El negro y el blanco son, técnicamente, la ausencia y la suma de todos los colores. En la práctica, son otra cosa: son una postura.',
+    'p2': 'Elegir trabajar únicamente en blanco y negro no es una limitación. Es una decisión radical. Significa que no te vas a apoyar en el color para llamar la atención, para crear emoción, para esconder errores. Lo que tienes es la forma. Solo la forma. Y tiene que ser suficiente.',
+    'p3': 'Las marcas más duraderas de la historia visual entendieron esto antes que nadie. Coco Chanel construyó un universo entero sobre el contraste entre el negro y el blanco. No porque no pudiera usar color, sino porque entendió que el contraste máximo genera la tensión máxima, y la tensión es lo que hace que no puedas dejar de mirar.',
+    'p4': 'Hay algo en el ojo humano que no puede ignorar el contraste. Es una respuesta primitiva, anterior al gusto y a la educación estética. El negro sobre blanco activa algo en nosotros que el color nunca logra de la misma manera.',
+    'p5': 'Pero más allá de la psicología visual, existe una razón filosófica para esta paleta. El mundo está lleno de ruido, de colores que gritan, de estímulos que compiten por tu atención. Moverse en blanco y negro es una forma de decir: aquí no hay distracción. Aquí solo hay lo esencial.',
+    'p6': 'La joyería en acero vive naturalmente en este espacio. Un metal que refleja la luz sin añadir color. Una superficie que no interpreta, solo muestra. En la muñeca, en el cuello, contra cualquier piel: el acero es siempre contraste, siempre tensión. Esa es la única estética que nos interesa.',
+    'footer.copy': '© 2026 • Todos los derechos reservados',
+    'pageTitle': 'Negro sobre blanco — Black & White by Joel Soto'
+  },
+  en: {
+    'header.tag': 'Design • Exclusive',
+    'cat': 'Aesthetics',
+    'title': 'Black on White',
+    'back': '← Back',
+    'p1': 'Black and white are, technically, the absence and the sum of every color. In practice, they are something else: a stance.',
+    'p2': "Choosing to work only in black and white isn't a limitation. It's a radical decision. It means you won't lean on color to grab attention, to create emotion, to hide mistakes. What you have is form. Only form. And it has to be enough.",
+    'p3': "The most enduring brands in visual history understood this before anyone else. Coco Chanel built an entire universe on the contrast between black and white. Not because she couldn't use color, but because she understood that maximum contrast creates maximum tension, and tension is what keeps you from looking away.",
+    'p4': "There's something in the human eye that cannot ignore contrast. It's a primitive response, older than taste or aesthetic education. Black on white activates something in us that color never quite reaches the same way.",
+    'p5': "But beyond visual psychology, there's a philosophical reason for this palette. The world is full of noise, of colors that shout, of stimuli competing for your attention. Moving through black and white is a way of saying: there's no distraction here. Only what's essential.",
+    'p6': "Steel jewelry lives naturally in this space. A metal that reflects light without adding color. A surface that doesn't interpret, only shows. On the wrist, on the neck, against any skin: steel is always contrast, always tension. That's the only aesthetic that interests us.",
+    'footer.copy': '© 2026 • All rights reserved',
+    'pageTitle': 'Black on White — Black & White by Joel Soto'
+  }
+});
+</script>
 
 </body>
 </html>

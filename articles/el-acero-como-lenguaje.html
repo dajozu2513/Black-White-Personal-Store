@@ -18,34 +18,74 @@
       <span class="brand-sub">by Joel Soto</span>
     </div>
   </a>
-  <div class="header-tag">Diseño &bull; Exclusivo</div>
+  <div class="header-right">
+    <div class="header-tag" data-i18n="header.tag">Diseño &bull; Exclusivo</div>
+    <div class="lang-toggle" id="langToggle" role="group" aria-label="Idioma / Language">
+      <button type="button" class="lang-opt" data-lang="es">ES</button>
+      <button type="button" class="lang-opt" data-lang="en">EN</button>
+    </div>
+  </div>
 </header>
 
 <div class="article-hero">
-  <span class="article-hero-cat">Material</span>
-  <h1 class="article-hero-title">El acero como lenguaje</h1>
+  <span class="article-hero-cat" data-i18n="cat">Material</span>
+  <h1 class="article-hero-title" data-i18n="title">El acero como lenguaje</h1>
 </div>
 
 <article class="article-body">
-  <a href="../index.html" class="article-back">← Volver</a>
+  <a href="../index.html" class="article-back" data-i18n="back">← Volver</a>
 
-  <p>Hay materiales que hablan antes de que los toques. El acero inoxidable es uno de ellos.</p>
+  <p data-i18n="p1">Hay materiales que hablan antes de que los toques. El acero inoxidable es uno de ellos.</p>
 
-  <p>No es el material más cálido. No tiene la suavidad del oro ni la poesía ancestral de la plata. Lo que tiene es honestidad. Una superficie que no pretende ser otra cosa que lo que es: dura, limpia, permanente.</p>
+  <p data-i18n="p2">No es el material más cálido. No tiene la suavidad del oro ni la poesía ancestral de la plata. Lo que tiene es honestidad. Una superficie que no pretende ser otra cosa que lo que es: dura, limpia, permanente.</p>
 
-  <p>El minimalismo contemporáneo no eligió el acero por casualidad. Lo eligió porque el acero no miente. No se oxida con el tiempo ni se mancha con el uso cotidiano. Lo que ves el primer día es lo que tienes a los diez años. En un mundo donde todo envejece rápido y se reemplaza más rápido aún, eso es una declaración.</p>
+  <p data-i18n="p3">El minimalismo contemporáneo no eligió el acero por casualidad. Lo eligió porque el acero no miente. No se oxida con el tiempo ni se mancha con el uso cotidiano. Lo que ves el primer día es lo que tienes a los diez años. En un mundo donde todo envejece rápido y se reemplaza más rápido aún, eso es una declaración.</p>
 
-  <p>Existe una estética particular en los objetos que no intentan disimular lo que son. Una cadena de acero no esconde su proceso de fabricación: cada eslabón es visible, cada unión es honesta. La estructura es la forma y la forma es el mensaje.</p>
+  <p data-i18n="p4">Existe una estética particular en los objetos que no intentan disimular lo que son. Una cadena de acero no esconde su proceso de fabricación: cada eslabón es visible, cada unión es honesta. La estructura es la forma y la forma es el mensaje.</p>
 
-  <p>Los diseñadores que trabajan con acero entienden algo que otros ignoran: la limitación es una herramienta. Cuando eliminas el color, el brillo artificial y los acabados decorativos, lo que queda es la forma pura. Y la forma pura, si es correcta, no necesita nada más.</p>
+  <p data-i18n="p5">Los diseñadores que trabajan con acero entienden algo que otros ignoran: la limitación es una herramienta. Cuando eliminas el color, el brillo artificial y los acabados decorativos, lo que queda es la forma pura. Y la forma pura, si es correcta, no necesita nada más.</p>
 
-  <p>El acero habla en presente. No tiene nostalgia ni pretensión de antigüedad. Existe ahora, con toda la contundencia de lo contemporáneo.</p>
+  <p data-i18n="p6">El acero habla en presente. No tiene nostalgia ni pretensión de antigüedad. Existe ahora, con toda la contundencia de lo contemporáneo.</p>
 </article>
 
 <footer>
   <div class="footer-brand">Black &amp; White &mdash; Joel Soto</div>
-  <div class="footer-copy">&copy; 2026 &bull; Todos los derechos reservados</div>
+  <div class="footer-copy" data-i18n="footer.copy">&copy; 2026 &bull; Todos los derechos reservados</div>
 </footer>
+
+<script src="../js/i18n.js"></script>
+<script>
+BWI18N.init({
+  es: {
+    'header.tag': 'Diseño • Exclusivo',
+    'cat': 'Material',
+    'title': 'El acero como lenguaje',
+    'back': '← Volver',
+    'p1': 'Hay materiales que hablan antes de que los toques. El acero inoxidable es uno de ellos.',
+    'p2': 'No es el material más cálido. No tiene la suavidad del oro ni la poesía ancestral de la plata. Lo que tiene es honestidad. Una superficie que no pretende ser otra cosa que lo que es: dura, limpia, permanente.',
+    'p3': 'El minimalismo contemporáneo no eligió el acero por casualidad. Lo eligió porque el acero no miente. No se oxida con el tiempo ni se mancha con el uso cotidiano. Lo que ves el primer día es lo que tienes a los diez años. En un mundo donde todo envejece rápido y se reemplaza más rápido aún, eso es una declaración.',
+    'p4': 'Existe una estética particular en los objetos que no intentan disimular lo que son. Una cadena de acero no esconde su proceso de fabricación: cada eslabón es visible, cada unión es honesta. La estructura es la forma y la forma es el mensaje.',
+    'p5': 'Los diseñadores que trabajan con acero entienden algo que otros ignoran: la limitación es una herramienta. Cuando eliminas el color, el brillo artificial y los acabados decorativos, lo que queda es la forma pura. Y la forma pura, si es correcta, no necesita nada más.',
+    'p6': 'El acero habla en presente. No tiene nostalgia ni pretensión de antigüedad. Existe ahora, con toda la contundencia de lo contemporáneo.',
+    'footer.copy': '© 2026 • Todos los derechos reservados',
+    'pageTitle': 'El acero como lenguaje — Black & White by Joel Soto'
+  },
+  en: {
+    'header.tag': 'Design • Exclusive',
+    'cat': 'Material',
+    'title': 'Steel as Language',
+    'back': '← Back',
+    'p1': 'Some materials speak before you even touch them. Stainless steel is one of them.',
+    'p2': "It isn't the warmest material. It has none of gold's softness or silver's ancestral poetry. What it has is honesty. A surface that doesn't pretend to be anything other than what it is: hard, clean, permanent.",
+    'p3': "Contemporary minimalism didn't choose steel by accident. It chose it because steel doesn't lie. It doesn't rust over time or stain with everyday use. What you see on day one is what you still have ten years later. In a world where everything ages fast and gets replaced even faster, that's a statement.",
+    'p4': "There's a particular aesthetic in objects that don't try to hide what they are. A steel chain doesn't conceal its own construction: every link is visible, every joint is honest. The structure is the form, and the form is the message.",
+    'p5': "Designers who work with steel understand something others overlook: limitation is a tool. When you strip away color, artificial shine, and decorative finishes, what's left is pure form. And pure form, when it's right, needs nothing else.",
+    'p6': 'Steel speaks in the present tense. It has no nostalgia, no pretense of age. It exists now, with all the force of the contemporary.',
+    'footer.copy': '© 2026 • All rights reserved',
+    'pageTitle': 'Steel as Language — Black & White by Joel Soto'
+  }
+});
+</script>
 
 </body>
 </html>

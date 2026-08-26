@@ -41,7 +41,13 @@
     <div class="brand-name">Black &amp; White</div>
     <span class="brand-sub">by Joel Soto</span>
   </div>
-  <div class="header-tag">Diseño &bull; Exclusivo</div>
+  <div class="header-right">
+    <div class="header-tag" data-i18n="header.tag">Diseño &bull; Exclusivo</div>
+    <div class="lang-toggle" id="langToggle" role="group" aria-label="Idioma / Language">
+      <button type="button" class="lang-opt" data-lang="es">ES</button>
+      <button type="button" class="lang-opt" data-lang="en">EN</button>
+    </div>
+  </div>
 </header>
 
 <!-- HERO -->
@@ -50,7 +56,7 @@
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <h1 class="hero-title">Black &amp;<br><em>White</em></h1>
-    <a href="#coleccion" class="hero-btn">Ver colección</a>
+    <a href="#coleccion" class="hero-btn" data-i18n="hero.cta">Ver colección</a>
   </div>
   <div class="hero-scroll">
     <svg class="hero-scroll-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -68,16 +74,16 @@
       <circle cx="24" cy="15" r="4.5" fill="var(--surface)" stroke="none"/>
       <circle cx="24" cy="33" r="4.5" fill="currentColor" stroke="none"/>
     </svg>
-    <div class="pillar-title">Estética Black &amp; White</div>
-    <p class="pillar-text">Un universo en blanco y negro. Sin distracciones, sin ruido.</p>
+    <div class="pillar-title" data-i18n="pillar1.title">Estética Black &amp; White</div>
+    <p class="pillar-text" data-i18n="pillar1.text">Un universo en blanco y negro. Sin distracciones, sin ruido.</p>
   </div>
   <div class="pillar">
     <svg class="pillar-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3">
       <rect x="6" y="10" width="16" height="28" rx="1" fill="currentColor" stroke="none"/>
       <rect x="26" y="10" width="16" height="28" rx="1" fill="none" stroke="currentColor"/>
     </svg>
-    <div class="pillar-title">Una sola paleta</div>
-    <p class="pillar-text">El contraste como lenguaje. Negro y blanco como filosofía.</p>
+    <div class="pillar-title" data-i18n="pillar2.title">Una sola paleta</div>
+    <p class="pillar-text" data-i18n="pillar2.text">El contraste como lenguaje. Negro y blanco como filosofía.</p>
   </div>
   <div class="pillar">
     <svg class="pillar-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3">
@@ -85,8 +91,8 @@
       <polygon points="24,14 36,21 36,27 24,34 12,27 12,21" stroke-linejoin="round"/>
       <circle cx="24" cy="24" r="3" fill="currentColor" stroke="none"/>
     </svg>
-    <div class="pillar-title">Identidad propia</div>
-    <p class="pillar-text">No seguimos tendencias. Definimos las nuestras.</p>
+    <div class="pillar-title" data-i18n="pillar3.title">Identidad propia</div>
+    <p class="pillar-text" data-i18n="pillar3.text">No seguimos tendencias. Definimos las nuestras.</p>
   </div>
 </section>
 
@@ -95,7 +101,7 @@
   <div class="separator-bg" id="separator-bg"></div>
   <div class="separator-overlay">
     <span class="separator-headline observe-reveal">
-      <span class="reveal-wrap"><span class="reveal-line">Todo lo que excede, estorba.</span></span>
+      <span class="reveal-wrap"><span class="reveal-line" data-i18n="sep1.headline">Todo lo que excede, estorba.</span></span>
     </span>
   </div>
 </div>
@@ -104,7 +110,7 @@
 <section class="carousel-section" id="coleccion">
   <div class="section-header observe-fade">
     <h2 class="section-title observe-reveal">
-      <span class="reveal-wrap"><span class="reveal-line">Joyería <em>de Acero</em></span></span>
+      <span class="reveal-wrap"><span class="reveal-line" data-i18n-html="collection.title">Joyería <em>de Acero</em></span></span>
     </h2>
   </div>
 
@@ -205,7 +211,7 @@
   <div class="separator-bg" id="separator2-bg"></div>
   <div class="separator-overlay">
     <span class="separator-headline observe-reveal">
-      <span class="reveal-wrap"><span class="reveal-line">Todo lo que perdura, define.</span></span>
+      <span class="reveal-wrap"><span class="reveal-line" data-i18n="sep2.headline">Todo lo que perdura, define.</span></span>
     </span>
   </div>
 </div>
@@ -213,26 +219,26 @@
 <!-- ARTICLES -->
 <section class="articles-section">
   <div class="articles-header observe-fade">
-    <h2 class="section-title">Lecturas <em>de la marca</em></h2>
+    <h2 class="section-title" data-i18n-html="articles.title">Lecturas <em>de la marca</em></h2>
   </div>
   <div class="articles-grid">
     <a href="articles/el-acero-como-lenguaje.html" class="article-card observe-fade">
-      <span class="article-cat">Material</span>
-      <h3 class="article-title">El acero como lenguaje</h3>
-      <p class="article-excerpt">Por qué el acero inoxidable se convirtió en el material del minimalismo contemporáneo.</p>
-      <span class="article-read">Leer</span>
+      <span class="article-cat" data-i18n="article1.cat">Material</span>
+      <h3 class="article-title" data-i18n="article1.title">El acero como lenguaje</h3>
+      <p class="article-excerpt" data-i18n="article1.excerpt">Por qué el acero inoxidable se convirtió en el material del minimalismo contemporáneo.</p>
+      <span class="article-read" data-i18n="article.read">Leer</span>
     </a>
     <a href="articles/la-cadena-como-objeto.html" class="article-card observe-fade">
-      <span class="article-cat">Historia</span>
-      <h3 class="article-title">La cadena como objeto</h3>
-      <p class="article-excerpt">Historia y significado cultural de llevar cadenas a través de los siglos.</p>
-      <span class="article-read">Leer</span>
+      <span class="article-cat" data-i18n="article2.cat">Historia</span>
+      <h3 class="article-title" data-i18n="article2.title">La cadena como objeto</h3>
+      <p class="article-excerpt" data-i18n="article2.excerpt">Historia y significado cultural de llevar cadenas a través de los siglos.</p>
+      <span class="article-read" data-i18n="article.read">Leer</span>
     </a>
     <a href="articles/negro-sobre-blanco.html" class="article-card observe-fade">
-      <span class="article-cat">Estética</span>
-      <h3 class="article-title">Negro sobre blanco</h3>
-      <p class="article-excerpt">La filosofía detrás de una paleta sin concesiones y por qué sigue siendo la más poderosa.</p>
-      <span class="article-read">Leer</span>
+      <span class="article-cat" data-i18n="article3.cat">Estética</span>
+      <h3 class="article-title" data-i18n="article3.title">Negro sobre blanco</h3>
+      <p class="article-excerpt" data-i18n="article3.excerpt">La filosofía detrás de una paleta sin concesiones y por qué sigue siendo la más poderosa.</p>
+      <span class="article-read" data-i18n="article.read">Leer</span>
     </a>
   </div>
 </section>
@@ -240,7 +246,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand">Black &amp; White &mdash; Joel Soto</div>
-  <div class="footer-copy">&copy; 2026 &bull; Todos los derechos reservados</div>
+  <div class="footer-copy" data-i18n="footer.copy">&copy; 2026 &bull; Todos los derechos reservados</div>
 </footer>
 
 
@@ -252,11 +258,70 @@
     <div class="modal-body">
       <div class="modal-name" id="modalName"></div>
       <p class="modal-desc" id="modalDesc"></p>
-      <a class="modal-btn" id="modalBtn" href="" target="_blank" rel="noopener noreferrer">Consultar</a>
+      <a class="modal-btn" id="modalBtn" href="" target="_blank" rel="noopener noreferrer" data-i18n="modal.cta">Consultar</a>
     </div>
   </div>
 </div>
 
+<script src="js/i18n.js"></script>
+<script>
+BWI18N.init({
+  es: {
+    'header.tag': 'Diseño • Exclusivo',
+    'hero.cta': 'Ver colección',
+    'pillar1.title': 'Estética Black & White',
+    'pillar1.text': 'Un universo en blanco y negro. Sin distracciones, sin ruido.',
+    'pillar2.title': 'Una sola paleta',
+    'pillar2.text': 'El contraste como lenguaje. Negro y blanco como filosofía.',
+    'pillar3.title': 'Identidad propia',
+    'pillar3.text': 'No seguimos tendencias. Definimos las nuestras.',
+    'sep1.headline': 'Todo lo que excede, estorba.',
+    'collection.title': 'Joyería <em>de Acero</em>',
+    'sep2.headline': 'Todo lo que perdura, define.',
+    'articles.title': 'Lecturas <em>de la marca</em>',
+    'article1.cat': 'Material',
+    'article1.title': 'El acero como lenguaje',
+    'article1.excerpt': 'Por qué el acero inoxidable se convirtió en el material del minimalismo contemporáneo.',
+    'article2.cat': 'Historia',
+    'article2.title': 'La cadena como objeto',
+    'article2.excerpt': 'Historia y significado cultural de llevar cadenas a través de los siglos.',
+    'article3.cat': 'Estética',
+    'article3.title': 'Negro sobre blanco',
+    'article3.excerpt': 'La filosofía detrás de una paleta sin concesiones y por qué sigue siendo la más poderosa.',
+    'article.read': 'Leer',
+    'footer.copy': '© 2026 • Todos los derechos reservados',
+    'modal.cta': 'Consultar',
+    'pageTitle': 'Black & White by Joel Soto'
+  },
+  en: {
+    'header.tag': 'Design • Exclusive',
+    'hero.cta': 'View collection',
+    'pillar1.title': 'Black & White Aesthetic',
+    'pillar1.text': 'A universe in black and white. No distractions, no noise.',
+    'pillar2.title': 'One palette only',
+    'pillar2.text': 'Contrast as language. Black and white as philosophy.',
+    'pillar3.title': 'A voice of its own',
+    'pillar3.text': "We don't follow trends. We set our own.",
+    'sep1.headline': 'Everything in excess gets in the way.',
+    'collection.title': '<em>Steel</em> Jewelry',
+    'sep2.headline': 'What endures, defines.',
+    'articles.title': 'Brand <em>Reads</em>',
+    'article1.cat': 'Material',
+    'article1.title': 'Steel as Language',
+    'article1.excerpt': 'Why stainless steel became the material of contemporary minimalism.',
+    'article2.cat': 'History',
+    'article2.title': 'The Chain as Object',
+    'article2.excerpt': 'The history and cultural meaning of wearing chains across the centuries.',
+    'article3.cat': 'Aesthetics',
+    'article3.title': 'Black on White',
+    'article3.excerpt': 'The philosophy behind an uncompromising palette and why it remains the most powerful.',
+    'article.read': 'Read',
+    'footer.copy': '© 2026 • All rights reserved',
+    'modal.cta': 'Inquire',
+    'pageTitle': 'Black & White by Joel Soto'
+  }
+});
+</script>
 <script src="js/main.js"></script>
 </body>
 </html>

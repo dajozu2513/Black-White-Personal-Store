@@ -18,34 +18,74 @@
       <span class="brand-sub">by Joel Soto</span>
     </div>
   </a>
-  <div class="header-tag">Diseño &bull; Exclusivo</div>
+  <div class="header-right">
+    <div class="header-tag" data-i18n="header.tag">Diseño &bull; Exclusivo</div>
+    <div class="lang-toggle" id="langToggle" role="group" aria-label="Idioma / Language">
+      <button type="button" class="lang-opt" data-lang="es">ES</button>
+      <button type="button" class="lang-opt" data-lang="en">EN</button>
+    </div>
+  </div>
 </header>
 
 <div class="article-hero">
-  <span class="article-hero-cat">Historia</span>
-  <h1 class="article-hero-title">La cadena como objeto</h1>
+  <span class="article-hero-cat" data-i18n="cat">Historia</span>
+  <h1 class="article-hero-title" data-i18n="title">La cadena como objeto</h1>
 </div>
 
 <article class="article-body">
-  <a href="../index.html" class="article-back">← Volver</a>
+  <a href="../index.html" class="article-back" data-i18n="back">← Volver</a>
 
-  <p>Antes de ser adorno, la cadena fue instrumento. Unía, sujetaba, marcaba límites. Tenía una función que nadie cuestionaba y una forma que nadie decoraba.</p>
+  <p data-i18n="p1">Antes de ser adorno, la cadena fue instrumento. Unía, sujetaba, marcaba límites. Tenía una función que nadie cuestionaba y una forma que nadie decoraba.</p>
 
-  <p>Algo cambió cuando alguien decidió llevarla encima.</p>
+  <p data-i18n="p2">Algo cambió cuando alguien decidió llevarla encima.</p>
 
-  <p>No se sabe exactamente cuándo ocurrió esa transición, ese momento en que un objeto de trabajo se convirtió en objeto de deseo. Pero sí se sabe que las cadenas como joyería tienen miles de años: las encontramos en tumbas egipcias, en los cuellos de los guerreros griegos, en los retratos del Renacimiento. Cada era reinterpretó la misma forma básica, el mismo eslabón que se repite y conecta.</p>
+  <p data-i18n="p3">No se sabe exactamente cuándo ocurrió esa transición, ese momento en que un objeto de trabajo se convirtió en objeto de deseo. Pero sí se sabe que las cadenas como joyería tienen miles de años: las encontramos en tumbas egipcias, en los cuellos de los guerreros griegos, en los retratos del Renacimiento. Cada era reinterpretó la misma forma básica, el mismo eslabón que se repite y conecta.</p>
 
-  <p>Lo que hace a la cadena diferente de otros tipos de joyería es su naturaleza modular. No es una pieza única e irrompible como un anillo o un pendiente. Es una sucesión de unidades idénticas que, juntas, forman algo más grande que la suma de sus partes. Quitarle un eslabón la rompe. Agregarle uno la extiende. Hay algo filosófico en eso.</p>
+  <p data-i18n="p4">Lo que hace a la cadena diferente de otros tipos de joyería es su naturaleza modular. No es una pieza única e irrompible como un anillo o un pendiente. Es una sucesión de unidades idénticas que, juntas, forman algo más grande que la suma de sus partes. Quitarle un eslabón la rompe. Agregarle uno la extiende. Hay algo filosófico en eso.</p>
 
-  <p>La cadena también fue siempre símbolo de pertenencia. No en el sentido de restricción, sino en el sentido de identidad. Las cadenas de oro marcaban estatus. Las de acero, actitud. Las de plata, delicadeza. El material no cambiaba la forma; cambiaba el mensaje.</p>
+  <p data-i18n="p5">La cadena también fue siempre símbolo de pertenencia. No en el sentido de restricción, sino en el sentido de identidad. Las cadenas de oro marcaban estatus. Las de acero, actitud. Las de plata, delicadeza. El material no cambiaba la forma; cambiaba el mensaje.</p>
 
-  <p>Hoy, la cadena vive su momento más libre. Ya no representa una sola cosa ni se lleva de una sola forma. Es minimalismo cuando es delgada y solitaria. Es declaración cuando es gruesa y múltiple. Es poesía cuando la usas donde nadie espera. La cadena siempre fue un objeto cargado de significado. Lo que ha cambiado es que ahora tú decides cuál es ese significado.</p>
+  <p data-i18n="p6">Hoy, la cadena vive su momento más libre. Ya no representa una sola cosa ni se lleva de una sola forma. Es minimalismo cuando es delgada y solitaria. Es declaración cuando es gruesa y múltiple. Es poesía cuando la usas donde nadie espera. La cadena siempre fue un objeto cargado de significado. Lo que ha cambiado es que ahora tú decides cuál es ese significado.</p>
 </article>
 
 <footer>
   <div class="footer-brand">Black &amp; White &mdash; Joel Soto</div>
-  <div class="footer-copy">&copy; 2026 &bull; Todos los derechos reservados</div>
+  <div class="footer-copy" data-i18n="footer.copy">&copy; 2026 &bull; Todos los derechos reservados</div>
 </footer>
+
+<script src="../js/i18n.js"></script>
+<script>
+BWI18N.init({
+  es: {
+    'header.tag': 'Diseño • Exclusivo',
+    'cat': 'Historia',
+    'title': 'La cadena como objeto',
+    'back': '← Volver',
+    'p1': 'Antes de ser adorno, la cadena fue instrumento. Unía, sujetaba, marcaba límites. Tenía una función que nadie cuestionaba y una forma que nadie decoraba.',
+    'p2': 'Algo cambió cuando alguien decidió llevarla encima.',
+    'p3': 'No se sabe exactamente cuándo ocurrió esa transición, ese momento en que un objeto de trabajo se convirtió en objeto de deseo. Pero sí se sabe que las cadenas como joyería tienen miles de años: las encontramos en tumbas egipcias, en los cuellos de los guerreros griegos, en los retratos del Renacimiento. Cada era reinterpretó la misma forma básica, el mismo eslabón que se repite y conecta.',
+    'p4': 'Lo que hace a la cadena diferente de otros tipos de joyería es su naturaleza modular. No es una pieza única e irrompible como un anillo o un pendiente. Es una sucesión de unidades idénticas que, juntas, forman algo más grande que la suma de sus partes. Quitarle un eslabón la rompe. Agregarle uno la extiende. Hay algo filosófico en eso.',
+    'p5': 'La cadena también fue siempre símbolo de pertenencia. No en el sentido de restricción, sino en el sentido de identidad. Las cadenas de oro marcaban estatus. Las de acero, actitud. Las de plata, delicadeza. El material no cambiaba la forma; cambiaba el mensaje.',
+    'p6': 'Hoy, la cadena vive su momento más libre. Ya no representa una sola cosa ni se lleva de una sola forma. Es minimalismo cuando es delgada y solitaria. Es declaración cuando es gruesa y múltiple. Es poesía cuando la usas donde nadie espera. La cadena siempre fue un objeto cargado de significado. Lo que ha cambiado es que ahora tú decides cuál es ese significado.',
+    'footer.copy': '© 2026 • Todos los derechos reservados',
+    'pageTitle': 'La cadena como objeto — Black & White by Joel Soto'
+  },
+  en: {
+    'header.tag': 'Design • Exclusive',
+    'cat': 'History',
+    'title': 'The Chain as Object',
+    'back': '← Back',
+    'p1': 'Before it was ornament, the chain was a tool. It joined, it secured, it marked boundaries. It had a function no one questioned and a form no one decorated.',
+    'p2': 'Something changed the day someone decided to wear one.',
+    'p3': "No one knows exactly when that shift happened, the moment a working object became an object of desire. But chains as jewelry are known to be thousands of years old: we find them in Egyptian tombs, around the necks of Greek warriors, in Renaissance portraits. Every era reinterpreted the same basic form, the same link repeating and connecting.",
+    'p4': "What sets the chain apart from other kinds of jewelry is its modular nature. It isn't a single, unbreakable piece like a ring or an earring. It's a sequence of identical units that, together, become something greater than the sum of its parts. Remove one link and it breaks. Add one and it extends. There's something philosophical in that.",
+    'p5': "The chain was also always a symbol of belonging. Not in the sense of restraint, but of identity. Gold chains marked status. Steel, attitude. Silver, delicacy. The material didn't change the form; it changed the message.",
+    'p6': "Today, the chain lives its freest moment yet. It no longer stands for one single thing, nor is it worn just one way. It's minimalism when thin and solitary. It's a statement when thick and layered. It's poetry when worn where no one expects it. The chain was always an object loaded with meaning. What's changed is that now you decide what that meaning is.",
+    'footer.copy': '© 2026 • All rights reserved',
+    'pageTitle': 'The Chain as Object — Black & White by Joel Soto'
+  }
+});
+</script>
 
 </body>
 </html>

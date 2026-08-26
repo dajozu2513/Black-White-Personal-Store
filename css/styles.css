@@ -150,6 +150,46 @@
 
   header.scrolled .header-tag { color: var(--ink-mid); text-shadow: none; }
 
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.9rem, 2vw, 1.6rem);
+  }
+
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid rgba(255,255,255,0.55);
+    border-radius: 999px;
+    transition: border-color 0.4s;
+  }
+
+  header.scrolled .lang-toggle { border-color: var(--border); }
+
+  .lang-opt {
+    appearance: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    padding: 4px 9px;
+    border-radius: 999px;
+    color: rgba(255,255,255,0.85);
+    text-shadow: 0 1px 6px rgba(0,0,0,0.7);
+    transition: background 0.3s, color 0.3s;
+  }
+
+  header.scrolled .lang-opt { color: var(--ink-light); text-shadow: none; }
+
+  .lang-opt.active { background: #fff; color: var(--ink); text-shadow: none; }
+
+  header.scrolled .lang-opt.active { background: var(--ink); color: var(--surface); }
+
   /* ── HERO ── */
   .hero {
     position: relative;
@@ -711,6 +751,9 @@
   .page-article #site-header .brand-name { color: var(--ink); }
   .page-article #site-header .brand-sub  { color: var(--ink-mid); text-shadow: none; }
   .page-article #site-header .header-tag { color: var(--ink-mid); text-shadow: none; }
+  .page-article #site-header .lang-toggle { border-color: var(--border); }
+  .page-article #site-header .lang-opt { color: var(--ink-light); text-shadow: none; }
+  .page-article #site-header .lang-opt.active { background: var(--ink); color: var(--surface); }
 
   .brand-link { text-decoration: none; display: block; }
 
