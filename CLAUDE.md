@@ -31,6 +31,7 @@ Structure is split across three files: `index.html` (markup), `css/styles.css` (
 index.html               — markup only; links css/styles.css and js/main.js
 css/styles.css           — all styles, including animations and responsive rules
 js/main.js               — all interactivity (intro, parallax, carousel, modal)
+articles/                — standalone brand editorial pages (see Article pages below)
 pictures/
   background/            — chain.JPG (hero + separator parallax), horizontal.JPG, vertical.JPG
   products/              — 9 product images (Void, Star, Monolith, Static,
@@ -45,7 +46,11 @@ og.jpg                   — Open Graph / Twitter Card share image
 4. Pillars section — Three brand statements with `.observe-fade` scroll animation
 5. Separator — Parallax divider (`#separator-bg-wrap`) using `chain.JPG`
 6. `#coleccion` — 9-slide product carousel with product modal
-7. `<footer>` — Brand name and copyright
+7. Separator 2 (`#separator2-bg-wrap`) — second parallax divider, own headline
+8. Articles section — grid of 3 cards linking to standalone pages in `articles/`
+9. `<footer>` — Brand name and copyright
+
+**Article pages (`articles/*.html`):** standalone HTML documents, one per editorial piece (`el-acero-como-lenguaje.html`, `la-cadena-como-objeto.html`, `negro-sobre-blanco.html`). Each reuses the same header/footer markup and `css/styles.css` (referenced as `../css/styles.css` since they live one level deep) but has no `js/main.js` — no carousel/parallax/modal on these pages. `<body class="page-article">` scopes article-only styles. Adding a new article means: create the HTML file following the existing pattern, and add a matching `.article-card` link in the `articles-section` of `index.html`.
 
 **JavaScript (`js/main.js`):**
 - Intro: removes `#intro-screen` after 2 s fade-out via `setTimeout`
