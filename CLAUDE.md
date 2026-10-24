@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Static showcase website for "Black & White by Joel Soto", a lifestyle brand selling handmade steel jewelry. Vanilla HTML/CSS/JS — no framework, build step, package manager, linter, or tests.
 
-**Live URL:** `https://dajozu2513.github.io/black-and-white-joel` (GitHub Pages; absolute `og:url`/`og:image` meta tags in `index.html` point here). `render.yaml` also defines a Render static-site deploy of the repo root from `main`.
+**Live URL:** `https://dajozu2513.github.io/Black-White-Personal-Store` (GitHub Pages, repo `dajozu2513/Black-White-Personal-Store`, renamed from `black-and-white-joel`; absolute `og:url`/`og:image` meta tags in `index.html` point here). `render.yaml` also defines a Render static-site deploy of the repo root from `main`.
 
 ## Development
 
