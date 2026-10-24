@@ -1,0 +1,4 @@
+# Agent skills installed locally (npx skills); not part of the site
+.agents/
+.claude/skills/
+skills-lock.json

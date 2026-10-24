@@ -4,24 +4,70 @@
     introScreen.remove();
   } else {
     sessionStorage.setItem('introSeen', '1');
+    // Hero entrance animations wait (paused in CSS) until the splash starts fading
+    document.body.classList.add('intro-pending');
     setTimeout(() => {
       introScreen.classList.add('fade-out');
+      document.body.classList.remove('intro-pending');
       setTimeout(() => introScreen.remove(), 1000);
     }, 2000);
   }
 
+  // ── HERO TITLE: split into letters for the staggered entrance ──
+  const heroTitle = document.querySelector('.hero-title');
+  let charIndex = 0;
+  function splitChars(node) {
+    [...node.childNodes].forEach(child => {
+      if (child.nodeType === Node.TEXT_NODE) {
+        const frag = document.createDocumentFragment();
+        [...child.textContent].forEach(ch => {
+          const span = document.createElement('span');
+          span.className = 'char';
+          span.setAttribute('aria-hidden', 'true');
+          span.style.setProperty('--i', charIndex++);
+          span.textContent = ch === ' ' ? ' ' : ch;
+          frag.appendChild(span);
+        });
+        child.replaceWith(frag);
+      } else if (child.nodeType === Node.ELEMENT_NODE) {
+        splitChars(child);
+      }
+    });
+  }
+  splitChars(heroTitle);
+  heroTitle.classList.add('is-split');
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
   // ── HEADER SCROLL ──
   const header = document.getElementById('site-header');
-  window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 60);
-  }, { passive: true });
+  const updateHeader = () => header.classList.toggle('scrolled', window.scrollY > 60);
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  updateHeader(); // a reload can restore the page mid-scroll
 
   // ── PARALLAX ──
   const heroBg = document.getElementById('hero-bg');
 
+  const separators = [...document.querySelectorAll('.separator')].map(el => ({ el, bg: el.querySelector('.separator-bg') }));
+  const scrollProgress = document.querySelector('.scroll-progress');
+
   let rafPending = false;
   function updateParallax() {
+    const vh = window.innerHeight;
     heroBg.style.transform = `translateY(${window.scrollY * 0.35}px)`;
+
+    // Separator photos drift slower than the page and ease out of a slight zoom
+    if (!reduceMotion.matches) {
+      separators.forEach(({ el, bg }) => {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) return;
+        const p = (vh - r.top) / (vh + r.height); // 0 entering at the bottom → 1 leaving at the top
+        bg.style.transform = `translate3d(0, ${(p - 0.5) * r.height * 0.3}px, 0) scale(${1.1 - p * 0.1})`;
+      });
+    }
+
+    const max = document.documentElement.scrollHeight - vh;
+    scrollProgress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
     rafPending = false;
   }
   window.addEventListener('scroll', () => {
@@ -31,6 +77,18 @@
     }
   }, { passive: true });
   updateParallax();
+
+  // ── PILLAR ICONS: outlines draw in, solid shapes fade in after (see CSS) ──
+  document.querySelectorAll('.pillar-icon').forEach(svg => {
+    svg.querySelectorAll('circle, rect, path, polygon').forEach(shape => {
+      if (shape.getAttribute('stroke') !== 'none') {
+        shape.style.setProperty('--len', Math.ceil(shape.getTotalLength()) + 1);
+        shape.classList.add('draw');
+      } else {
+        shape.classList.add('fill');
+      }
+    });
+  });
 
   // ── FADE-IN ON SCROLL ──
   const fadeEls = document.querySelectorAll('.observe-fade');
@@ -55,44 +113,6 @@
     });
   }, { threshold: 0.3 });
   revealEls.forEach(el => ioReveal.observe(el));
-
-  // ── CAROUSEL ──
-  const slides = document.querySelectorAll('.slide');
-  const dots   = document.querySelectorAll('.dot');
-  const counter = document.getElementById('counter');
-  let current = 0;
-
-  function goTo(n) {
-    slides[current].classList.remove('active');
-    dots[current].classList.remove('active');
-    current = (n + slides.length) % slides.length;
-    slides[current].classList.add('active');
-    dots[current].classList.add('active');
-    counter.textContent = (current + 1) + ' / ' + slides.length;
-    const nameEl = slides[current].querySelector('.slide-name');
-    nameEl.classList.remove('slide-name-animate');
-    void nameEl.offsetWidth;
-    nameEl.classList.add('slide-name-animate');
-  }
-
-  document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
-  document.getElementById('next').addEventListener('click', () => goTo(current + 1));
-  dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.index)));
-
-  // Touch swipe
-  let tx = 0;
-  const track = document.getElementById('carousel-track');
-  track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
-  track.addEventListener('touchend', e => {
-    const diff = tx - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
-  }, { passive: true });
-
-  // Keyboard
-  document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft')  goTo(current - 1);
-    if (e.key === 'ArrowRight') goTo(current + 1);
-  });
 
   // ── PRODUCT MODAL ──
   const PRODUCTS = {
@@ -152,19 +172,37 @@
     modalBtn.href         = 'https://wa.me/50660062513?text=' + encodeURIComponent(copy.waText);
   }
 
-  function openModal(name, imgSrc) {
+  let closeTimer = null;
+
+  function openModal(name, sourceImg) {
     if (!PRODUCTS[name]) return;
+    clearTimeout(closeTimer);
     currentProduct = name;
-    modalImg.src = imgSrc;
+    modalImg.src = sourceImg.src;
     modalImg.alt = name;
     renderModal(name);
+    modal.classList.remove('is-closing');
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
+
+    // FLIP: start the modal image where the grid photo sits, then let it fly into place.
+    if (reduceMotion.matches) return;
+    const from = sourceImg.getBoundingClientRect();
+    const to   = modalImg.getBoundingClientRect();
+    modalImg.animate([
+      { transformOrigin: 'top left',
+        transform: `translate(${from.left - to.left}px, ${from.top - to.top}px) scale(${from.width / to.width})` },
+      { transformOrigin: 'top left', transform: 'none' }
+    ], { duration: 750, easing: 'cubic-bezier(0.16,1,0.3,1)' });
   }
 
   function closeModal() {
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
+    if (!modal.classList.contains('open') || modal.classList.contains('is-closing')) return;
+    modal.classList.add('is-closing');
+    closeTimer = setTimeout(() => {
+      modal.classList.remove('open', 'is-closing');
+      document.body.style.overflow = '';
+    }, reduceMotion.matches ? 0 : 350);
   }
 
   document.addEventListener('bw-lang-change', () => {
@@ -175,11 +213,9 @@
   modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  document.querySelectorAll('.slide-img-wrap, .slide-name').forEach(el => {
-    el.addEventListener('click', () => {
-      const slide = el.closest('.slide');
-      const name  = slide.querySelector('.slide-name').textContent.trim();
-      const img   = slide.querySelector('img').src;
-      openModal(name, img);
+  document.querySelectorAll('.product').forEach(product => {
+    product.addEventListener('click', () => {
+      const name = product.querySelector('.product-name').textContent.trim();
+      openModal(name, product.querySelector('img'));
     });
   });

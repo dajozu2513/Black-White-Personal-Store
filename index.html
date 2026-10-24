@@ -25,13 +25,33 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+<!-- 3D chain: hide the hero/band photos from the first paint when it can load (js/chain3d.js undoes this on failure) -->
+<script>
+  if (window.WebGLRenderingContext && 'noModule' in HTMLScriptElement.prototype && location.protocol !== 'file:') {
+    document.documentElement.classList.add('has-3d');
+  }
+</script>
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.183.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.183.0/examples/jsm/"
+    }
+  }
+</script>
 
 </head>
 <body>
 
+<!-- 3D CHAIN: fixed behind the page, seen through the hero and the separator bands -->
+<div class="chain-stage" id="chain-stage" aria-hidden="true"><canvas id="chain-canvas"></canvas></div>
+
 <!-- INTRO SCREEN -->
 <div id="intro-screen">
   <div class="intro-logo">Black &amp; <em>White</em></div>
+  <span class="intro-line" aria-hidden="true"></span>
   <div class="intro-tagline">by Joel Soto</div>
 </div>
 
@@ -48,6 +68,7 @@
       <button type="button" class="lang-opt" data-lang="en">EN</button>
     </div>
   </div>
+  <span class="scroll-progress" aria-hidden="true"></span>
 </header>
 
 <!-- HERO -->
@@ -55,8 +76,8 @@
   <div class="hero-bg" id="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <h1 class="hero-title">Black &amp;<br><em>White</em></h1>
-    <a href="#coleccion" class="hero-btn" data-i18n="hero.cta">Ver colección</a>
+    <h1 class="hero-title" aria-label="Black &amp; White">Black &amp;<br><em>White</em></h1>
+    <p class="hero-sub">by Joel Soto</p>
   </div>
   <div class="hero-scroll">
     <svg class="hero-scroll-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -107,103 +128,54 @@
 </div>
 
 <!-- CAROUSEL SECTION -->
-<section class="carousel-section" id="coleccion">
+<section class="collection-section" id="coleccion">
   <div class="section-header observe-fade">
     <h2 class="section-title observe-reveal">
       <span class="reveal-wrap"><span class="reveal-line" data-i18n-html="collection.title">Joyería <em>de Acero</em></span></span>
     </h2>
   </div>
 
-  <div class="carousel-wrap">
-    <button class="carousel-arrow arrow-prev" id="prev" aria-label="Anterior">
-      <svg viewBox="0 0 16 16"><polyline points="10,2 4,8 10,14"/></svg>
+  <!-- The whole collection at once; each piece opens the product modal.
+       --zoom evens out how big each chain looks (Void is the reference size) and
+       --focus is the point it zooms around: where the chain crosses the paper/fabric edge. -->
+  <div class="collection-grid observe-fade">
+    <button type="button" class="product" style="--i: 0; --zoom: 1; --focus: 46% 50%">
+      <img src="pictures/products/Void.JPG" alt="" loading="lazy">
+      <span class="product-name">Void</span>
     </button>
-
-    <div class="carousel-track" id="carousel-track">
-
-    <div class="slide active" data-index="0">
-      <div class="slide-img-wrap">
-        <img src="pictures/products/Void.JPG" alt="Void">
-      </div>
-      <div class="slide-info">
-        <div class="slide-name">Void</div>
-      </div>
-    </div>
-    <div class="slide " data-index="1">
-      <div class="slide-img-wrap">
-        <img src="pictures/products/Star.JPG" alt="Star">
-      </div>
-      <div class="slide-info">
-        <div class="slide-name">Star</div>
-      </div>
-    </div>
-    <div class="slide " data-index="2">
-      <div class="slide-img-wrap">
-        <img src="pictures/products/Monolith.JPG" alt="Monolith">
-      </div>
-      <div class="slide-info">
-        <div class="slide-name">Monolith</div>
-      </div>
-    </div>
-    <div class="slide " data-index="3">
-      <div class="slide-img-wrap">
-        <img src="pictures/products/Static.JPG" alt="Static">
-      </div>
-      <div class="slide-info">
-        <div class="slide-name">Static</div>
-      </div>
-    </div>
-    <div class="slide " data-index="4">
-      <div class="slide-img-wrap">
-        <img src="pictures/products/Together.JPG" alt="Together">
-      </div>
-      <div class="slide-info">
-        <div class="slide-name">Together</div>
-      </div>
-    </div>
-    <div class="slide " data-index="5">
-      <div class="slide-img-wrap">
-        <img src="pictures/products/Meridian.JPG" alt="Meridian">
-      </div>
-      <div class="slide-info">
-        <div class="slide-name">Meridian</div>
-      </div>
-    </div>
-    <div class="slide " data-index="6">
-      <div class="slide-img-wrap">
-        <img src="pictures/products/Heart.JPG" alt="Heart">
-      </div>
-      <div class="slide-info">
-        <div class="slide-name">Heart</div>
-      </div>
-    </div>
-    <div class="slide " data-index="7">
-      <div class="slide-img-wrap">
-        <img src="pictures/products/Echo.JPG" alt="Echo">
-      </div>
-      <div class="slide-info">
-        <div class="slide-name">Echo</div>
-      </div>
-    </div>
-    <div class="slide " data-index="8">
-      <div class="slide-img-wrap">
-        <img src="pictures/products/Snake.JPG" alt="Snake">
-      </div>
-      <div class="slide-info">
-        <div class="slide-name">Snake</div>
-      </div>
-    </div>
-    </div>
-
-    <button class="carousel-arrow arrow-next" id="next" aria-label="Siguiente">
-      <svg viewBox="0 0 16 16"><polyline points="6,2 12,8 6,14"/></svg>
+    <button type="button" class="product" style="--i: 1; --zoom: 1.25; --focus: 47% 46%">
+      <img src="pictures/products/Star.JPG" alt="" loading="lazy">
+      <span class="product-name">Star</span>
+    </button>
+    <button type="button" class="product" style="--i: 2; --zoom: 1.75; --focus: 47% 47%">
+      <img src="pictures/products/Monolith.JPG" alt="" loading="lazy">
+      <span class="product-name">Monolith</span>
+    </button>
+    <button type="button" class="product" style="--i: 3; --zoom: 1.65; --focus: 51% 48%">
+      <img src="pictures/products/Static.JPG" alt="" loading="lazy">
+      <span class="product-name">Static</span>
+    </button>
+    <button type="button" class="product" style="--i: 4; --zoom: 1.9; --focus: 47% 46%">
+      <img src="pictures/products/Together.JPG" alt="" loading="lazy">
+      <span class="product-name">Together</span>
+    </button>
+    <button type="button" class="product" style="--i: 5; --zoom: 2.4; --focus: 52% 50%">
+      <img src="pictures/products/Meridian.JPG" alt="" loading="lazy">
+      <span class="product-name">Meridian</span>
+    </button>
+    <button type="button" class="product" style="--i: 6; --zoom: 1.1; --focus: 46% 47%">
+      <img src="pictures/products/Heart.JPG" alt="" loading="lazy">
+      <span class="product-name">Heart</span>
+    </button>
+    <button type="button" class="product" style="--i: 7; --zoom: 1.15; --focus: 52% 47%">
+      <img src="pictures/products/Echo.JPG" alt="" loading="lazy">
+      <span class="product-name">Echo</span>
+    </button>
+    <button type="button" class="product" style="--i: 8; --zoom: 2.1; --focus: 49% 53%">
+      <img src="pictures/products/Snake.JPG" alt="" loading="lazy">
+      <span class="product-name">Snake</span>
     </button>
   </div>
-
-  <div class="carousel-dots" id="dots">
-<button class="dot active" data-index="0" aria-label="Producto 1"></button><button class="dot " data-index="1" aria-label="Producto 2"></button><button class="dot " data-index="2" aria-label="Producto 3"></button><button class="dot " data-index="3" aria-label="Producto 4"></button><button class="dot " data-index="4" aria-label="Producto 5"></button><button class="dot " data-index="5" aria-label="Producto 6"></button><button class="dot " data-index="6" aria-label="Producto 7"></button><button class="dot " data-index="7" aria-label="Producto 8"></button><button class="dot " data-index="8" aria-label="Producto 9"></button>
-  </div>
-  <div class="carousel-counter" id="counter">1 / 9</div>
 </section>
 
 <!-- SEPARATOR 2 -->
@@ -217,26 +189,26 @@
 </div>
 
 <!-- ARTICLES -->
-<section class="articles-section">
+<section class="articles-section" id="lecturas">
   <div class="articles-header observe-fade">
     <h2 class="section-title" data-i18n-html="articles.title">Lecturas <em>de la marca</em></h2>
   </div>
   <div class="articles-grid">
     <a href="articles/el-acero-como-lenguaje.html" class="article-card observe-fade">
       <span class="article-cat" data-i18n="article1.cat">Material</span>
-      <h3 class="article-title" data-i18n="article1.title">El acero como lenguaje</h3>
+      <h3 class="article-title" style="view-transition-name: article-el-acero-como-lenguaje" data-i18n="article1.title">El acero como lenguaje</h3>
       <p class="article-excerpt" data-i18n="article1.excerpt">Por qué el acero inoxidable se convirtió en el material del minimalismo contemporáneo.</p>
       <span class="article-read" data-i18n="article.read">Leer</span>
     </a>
     <a href="articles/la-cadena-como-objeto.html" class="article-card observe-fade">
       <span class="article-cat" data-i18n="article2.cat">Historia</span>
-      <h3 class="article-title" data-i18n="article2.title">La cadena como objeto</h3>
+      <h3 class="article-title" style="view-transition-name: article-la-cadena-como-objeto" data-i18n="article2.title">La cadena como objeto</h3>
       <p class="article-excerpt" data-i18n="article2.excerpt">Historia y significado cultural de llevar cadenas a través de los siglos.</p>
       <span class="article-read" data-i18n="article.read">Leer</span>
     </a>
     <a href="articles/negro-sobre-blanco.html" class="article-card observe-fade">
       <span class="article-cat" data-i18n="article3.cat">Estética</span>
-      <h3 class="article-title" data-i18n="article3.title">Negro sobre blanco</h3>
+      <h3 class="article-title" style="view-transition-name: article-negro-sobre-blanco" data-i18n="article3.title">Negro sobre blanco</h3>
       <p class="article-excerpt" data-i18n="article3.excerpt">La filosofía detrás de una paleta sin concesiones y por qué sigue siendo la más poderosa.</p>
       <span class="article-read" data-i18n="article.read">Leer</span>
     </a>
@@ -245,7 +217,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-brand">Black &amp; White &mdash; Joel Soto</div>
+  <div class="footer-brand">Black &amp; White by Joel Soto</div>
   <div class="footer-copy" data-i18n="footer.copy">&copy; 2026 &bull; Todos los derechos reservados</div>
 </footer>
 
@@ -268,7 +240,6 @@
 BWI18N.init({
   es: {
     'header.tag': 'Diseño • Exclusivo',
-    'hero.cta': 'Ver colección',
     'pillar1.title': 'Estética Black & White',
     'pillar1.text': 'Un universo en blanco y negro. Sin distracciones, sin ruido.',
     'pillar2.title': 'Una sola paleta',
@@ -295,7 +266,6 @@ BWI18N.init({
   },
   en: {
     'header.tag': 'Design • Exclusive',
-    'hero.cta': 'View collection',
     'pillar1.title': 'Black & White Aesthetic',
     'pillar1.text': 'A universe in black and white. No distractions, no noise.',
     'pillar2.title': 'One palette only',
@@ -323,5 +293,6 @@ BWI18N.init({
 });
 </script>
 <script src="js/main.js"></script>
+<script type="module" src="js/chain3d.js"></script>
 </body>
 </html>

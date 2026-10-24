@@ -10,11 +10,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.7rem;
-    transition: opacity 1s ease;
+    gap: 1.1rem;
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 1s cubic-bezier(0.76,0,0.24,1);
   }
 
-  #intro-screen.fade-out { opacity: 0; pointer-events: none; }
+  /* Exit: the black curtain lifts and uncovers the hero from the bottom */
+  #intro-screen.fade-out { clip-path: inset(0 0 100% 0); pointer-events: none; }
 
   .intro-logo {
     font-family: var(--font-display);
@@ -23,10 +25,20 @@
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: #fff;
-    animation: introUp 1s cubic-bezier(0.16,1,0.3,1) both;
+    animation: introRise 1.2s cubic-bezier(0.16,1,0.3,1) both;
   }
 
   .intro-logo em { font-style: italic; }
+
+  /* Hairline drawn outward from the centre */
+  .intro-line {
+    display: block;
+    width: clamp(120px, 22vw, 240px);
+    height: 1px;
+    background: rgba(255,255,255,0.45);
+    transform: scaleX(0);
+    animation: introLine 1.1s 0.45s cubic-bezier(0.65,0,0.35,1) forwards;
+  }
 
   .intro-tagline {
     font-family: var(--font-body);
@@ -34,12 +46,22 @@
     letter-spacing: 0.45em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.75);
-    animation: introUp 1s 0.25s cubic-bezier(0.16,1,0.3,1) both;
+    animation: introSpread 1.4s 0.85s cubic-bezier(0.16,1,0.3,1) both;
   }
 
-  @keyframes introUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
+  /* Text rises out of an invisible slot */
+  @keyframes introRise {
+    from { clip-path: inset(100% 0 0 0); transform: translateY(40%); }
+    to   { clip-path: inset(0 0 0 0);    transform: translateY(0); }
+  }
+
+  @keyframes introLine {
+    to { transform: scaleX(1); }
+  }
+
+  @keyframes introSpread {
+    from { opacity: 0; letter-spacing: 0.9em; }
+    to   { opacity: 1; letter-spacing: 0.45em; }
   }
 
   /* ── TITLE REVEAL ── */
@@ -56,14 +78,6 @@
 
   .observe-reveal.visible .reveal-line { transform: translateY(0); }
 
-  /* ── SLIDE NAME ANIMATION ── */
-  @keyframes slideNameIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .slide-name-animate { animation: slideNameIn 0.4s cubic-bezier(0.16,1,0.3,1) both; }
-
   :root {
     --bg: #f5f4f2;
     --surface: #ffffff;
@@ -77,6 +91,25 @@
   }
 
   html { scroll-behavior: smooth; }
+
+  /* ── PAGE TRANSITIONS ──
+     Cross-document View Transitions between the home page and the articles
+     (browsers without support just navigate normally). The outgoing page sinks
+     and fades, the incoming one rises; an article card's title morphs into the
+     article's heading through a shared view-transition-name set inline on both. */
+  @media (prefers-reduced-motion: no-preference) {
+    @view-transition { navigation: auto; }
+
+    ::view-transition-old(root) { animation: pageOut 0.35s cubic-bezier(0.4,0,1,1) both; }
+    ::view-transition-new(root) { animation: pageIn 0.7s 0.25s cubic-bezier(0.16,1,0.3,1) both; }
+    ::view-transition-group(*) { animation-duration: 0.8s; animation-timing-function: cubic-bezier(0.65,0,0.35,1); }
+
+    /* The header is the same on both sides: keep it in place instead of cross-fading it */
+    #site-header { view-transition-name: site-header; }
+  }
+
+  @keyframes pageOut { to   { opacity: 0; transform: translateY(-12px); } }
+  @keyframes pageIn  { from { opacity: 0; transform: translateY(16px); } }
 
   body {
     background: var(--bg);
@@ -123,6 +156,21 @@
   }
 
   header.scrolled .brand-name { color: var(--ink); }
+
+  /* 1px reading-progress hairline along the header's bottom edge (driven by main.js) */
+  .scroll-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background: rgba(255,255,255,0.6);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: background 0.4s;
+  }
+
+  header.scrolled .scroll-progress { background: var(--ink); }
 
   .brand-sub {
     font-family: var(--font-body);
@@ -200,6 +248,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    background: var(--ink);
   }
 
   .hero-bg {
@@ -209,7 +258,41 @@
     background-size: cover;
     background-position: center top;
     will-change: transform;
+    transition: opacity 1.2s ease;
   }
+
+  /* ── 3D CHAIN STAGE ──
+     One fixed canvas behind the whole page (js/chain3d.js). With `has-3d`, the hero
+     and the separator bands drop their photos and backgrounds and become windows
+     onto it; every other section keeps its own background and covers it. */
+  .chain-stage {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: var(--ink);
+  }
+
+  .has-3d .chain-stage { display: block; }
+
+  .chain-stage canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 2s ease;
+  }
+
+  .chain-stage.is-ready canvas { opacity: 1; }
+
+  .has-3d .hero,
+  .has-3d .separator { background: transparent; }
+
+  .has-3d .hero-bg { opacity: 0; }
+  .has-3d .separator-bg { display: none; }
+
+  /* The chain's front arc already leads the eye down; the arrow would sit on top of it */
+  .has-3d .hero-scroll { display: none; }
 
   @media (orientation: portrait) {
     .hero-bg {
@@ -228,12 +311,21 @@
     );
   }
 
+  .has-3d .hero-overlay {
+    background:
+      radial-gradient(ellipse 38% 30% at 50% 50%, rgba(14,14,13,0.55) 0%, rgba(14,14,13,0) 100%),
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%);
+  }
+
   .hero-content {
     position: relative;
     z-index: 2;
     text-align: center;
     color: #fff;
     padding: 0 1.5rem;
+    /* The chain ring's near side sits lower and looks bigger, so its optical centre is
+       below the viewport's. `translate`, not `transform`: the entrance animation owns that. */
+    translate: 0 6vh;
     animation: heroFadeIn 1.2s ease both;
   }
 
@@ -269,6 +361,24 @@
     font-weight: 300;
   }
 
+  /* Letter-by-letter entrance; spans are added by main.js */
+  .hero-title.is-split { animation: none; }
+
+  .hero-title .char {
+    display: inline-block;
+    animation: charIn 1.4s calc(0.25s + var(--i) * 55ms) cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  @keyframes charIn {
+    from { opacity: 0; transform: translateY(0.35em); filter: blur(8px); }
+    to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+
+  /* Hold the hero entrance until the intro splash starts fading */
+  .intro-pending .hero-content,
+  .intro-pending .hero-content *,
+  .intro-pending .hero-scroll { animation-play-state: paused; }
+
   .hero-sub {
     font-family: var(--font-body);
     font-size: 0.65rem;
@@ -277,29 +387,7 @@
     text-transform: uppercase;
     color: rgba(255,255,255,1);
     text-shadow: 0 1px 6px rgba(0,0,0,0.7);
-    margin-bottom: 2.8rem;
     animation: heroFadeIn 1.2s 0.5s ease both;
-  }
-
-  .hero-btn {
-    display: inline-block;
-    padding: 0.9rem 2.4rem;
-    border: 1px solid rgba(255,255,255,0.7);
-    color: #fff;
-    font-family: var(--font-body);
-    font-size: 0.65rem;
-    font-weight: 400;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: background 0.3s, color 0.3s, border-color 0.3s;
-    animation: heroFadeIn 1.2s 0.65s ease both;
-  }
-
-  .hero-btn:hover {
-    background: #fff;
-    color: var(--ink);
-    border-color: #fff;
   }
 
   .hero-scroll {
@@ -337,12 +425,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 0;
     border-bottom: 1px solid var(--border);
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
   }
-
-  .pillars.visible { opacity: 1; transform: translateY(0); }
 
   .pillar {
     display: flex;
@@ -354,6 +437,38 @@
   }
 
   .pillar:last-child { border-right: none; }
+
+  /* Pillars arrive one after another; each icon draws its outline, then fills */
+  .pillar:nth-child(1) { --p: 0; }
+  .pillar:nth-child(2) { --p: 1; }
+  .pillar:nth-child(3) { --p: 2; }
+
+  .pillar-title, .pillar-text {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.16,1,0.3,1);
+    transition-delay: calc(0.5s + var(--p) * 0.18s);
+  }
+
+  .pillar-text { transition-delay: calc(0.62s + var(--p) * 0.18s); }
+
+  .pillars.visible .pillar-title,
+  .pillars.visible .pillar-text { opacity: 1; transform: translateY(0); }
+
+  /* --len is each outline's length, measured by main.js */
+  .pillar-icon .draw {
+    stroke-dasharray: var(--len);
+    stroke-dashoffset: var(--len);
+    transition: stroke-dashoffset 1.6s cubic-bezier(0.65,0,0.35,1) calc(0.2s + var(--p) * 0.18s);
+  }
+
+  .pillar-icon .fill {
+    opacity: 0;
+    transition: opacity 0.9s ease calc(1.1s + var(--p) * 0.18s);
+  }
+
+  .pillars.visible .pillar-icon .draw { stroke-dashoffset: 0; }
+  .pillars.visible .pillar-icon .fill { opacity: 1; }
 
   .pillar-icon {
     display: block;
@@ -391,13 +506,33 @@
     background: #0e0e0d;
   }
 
+  /* Taller than the band so main.js can drift and slowly zoom it while it crosses the viewport */
   .separator-bg {
     position: absolute;
-    inset: 0;
+    inset: -18% 0;
     background-image: url("../pictures/background/horizontal.JPG");
     background-size: cover;
     background-position: center 30%;
-    background-attachment: fixed;
+    will-change: transform;
+  }
+
+  /* Film grain, only over the dark photo bands: above the dimming overlay, below the headline */
+  .separator::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    inset: -60px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.07;
+    pointer-events: none;
+    animation: grain 0.8s steps(3) infinite;
+  }
+
+  @keyframes grain {
+    0%   { transform: translate(0, 0); }
+    33%  { transform: translate(-22px, 14px); }
+    66%  { transform: translate(18px, -26px); }
+    100% { transform: translate(-8px, 30px); }
   }
 
   @media (orientation: portrait) {
@@ -417,6 +552,11 @@
     gap: 0.5rem;
   }
 
+  /* Over the 3D chain: dark only behind the phrase, so the links stay bright at the edges */
+  .has-3d .separator-overlay {
+    background: radial-gradient(ellipse 42% 38% at 50% 50%, rgba(14,14,13,0.7) 0%, rgba(14,14,13,0) 100%);
+  }
+
   .separator-label {
     font-family: var(--font-body);
     font-size: 0.6rem;
@@ -427,17 +567,31 @@
 
   .separator-headline {
     font-family: var(--font-display);
-    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    font-size: clamp(1.4rem, 6vw, 4.2rem); /* one line on phones, so the chain can pass clear of it */
     font-weight: 300;
     font-style: italic;
     color: #fff;
     letter-spacing: 0.06em;
+    text-align: center;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
   }
 
-  /* ── CAROUSEL SECTION ── */
-  .carousel-section {
+  /* The phrase settles its tracking as it rises */
+  .separator-headline .reveal-line {
+    letter-spacing: 0.16em;
+    transition: transform 1s cubic-bezier(0.16,1,0.3,1), letter-spacing 1.8s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .separator-headline.visible .reveal-line { letter-spacing: 0.06em; }
+
+  /* ── COLLECTION SECTION ── */
+  /* Light, between the two black bands: the page alternates black and white */
+  .collection-section {
     background: var(--bg);
     padding: clamp(4rem, 8vw, 7rem) 0 clamp(4rem, 8vw, 6rem);
+    overflow: hidden;
   }
 
   .section-header {
@@ -469,182 +623,88 @@
 
   .section-title em { font-style: italic; }
 
-  /* ── CAROUSEL ── */
-  .carousel-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    max-width: 560px;
+  /* ── COLLECTION GRID ──
+     The nine pieces at once, square and close together. Every photo shares the same
+     diagonal of white paper and black fabric, so side by side they read as one
+     continuous pattern. Names appear on hover (always shown on touch screens), and
+     on a fine pointer the other pieces step back while one is hovered. */
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(4px, 0.6vw, 8px);
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 4rem;
+    padding: 0 clamp(1rem, 4vw, 3rem);
   }
 
-  .carousel-track {
+  .product {
     position: relative;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .slide {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-    animation: slideFade 0.45s ease;
-  }
-
-  .slide.active { display: flex; }
-
-  @keyframes slideFade {
-    from { opacity: 0; transform: scale(0.97); }
-    to { opacity: 1; transform: scale(1); }
-  }
-
-  .slide-img-wrap {
-    width: 100%;
+    display: block;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    background: #ede9e5;
-    border-radius: var(--radius);
+    padding: 0;
+    border: none;
+    background: var(--surface);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.9s ease calc(var(--i) * 70ms),
+      transform 0.9s cubic-bezier(0.16,1,0.3,1) calc(var(--i) * 70ms);
   }
 
-  .slide-img-wrap img {
+  .collection-grid.visible .product { opacity: 1; transform: translateY(0); }
+
+  .product img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-    filter: grayscale(100%) contrast(1.05);
-    transition: transform 0.5s ease, filter 0.4s;
+    filter: grayscale(100%) contrast(1.08) brightness(0.97);
+    /* Per-product zoom (inline --zoom / --focus) so every chain reads at a similar size */
+    transform: scale(var(--zoom, 1));
+    transform-origin: var(--focus, 50% 50%);
+    transition: transform 1.2s cubic-bezier(0.16,1,0.3,1), opacity 0.6s ease;
   }
 
-  .slide-img-wrap img:hover {
-    transform: scale(1.04);
-    filter: grayscale(70%) contrast(1.06);
-  }
-
-  .slide-info {
-    width: 100%;
-    padding: 1.6rem 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.2rem;
-    border-top: 1px solid var(--border);
-    margin-top: 1.4rem;
-  }
-
-  .slide-name {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink);
-    display: inline-block;
-    border-bottom: 1.5px solid transparent;
-    padding-bottom: 0.15em;
-    transition: border-color 0.2s, opacity 0.2s;
-  }
-
-  .slide-name:hover {
-    border-bottom-color: var(--ink);
-    opacity: 0.5;
-  }
-
-  .slide-btn {
-    display: inline-block;
-    padding: 0.8rem 2rem;
-    background: var(--ink);
-    color: var(--surface);
-    text-decoration: none;
-    font-family: var(--font-body);
-    font-size: 0.68rem;
-    font-weight: 400;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    border: 1px solid var(--ink);
-    border-radius: var(--radius);
-    transition: background 0.25s, color 0.25s;
-  }
-
-  .slide-btn:hover {
-    background: transparent;
-    color: var(--ink);
-  }
-
-  /* ── CAROUSEL ARROWS ── */
-  .carousel-arrow {
+  /* Name in the lower-left corner; `difference` keeps it legible on paper and fabric */
+  .product-name {
     position: absolute;
-    top: 40%;
-    transform: translateY(-50%);
-    width: 42px;
-    height: 42px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.2s, border-color 0.2s, transform 0.2s;
-    z-index: 10;
-    flex-shrink: 0;
+    left: clamp(0.8rem, 2vw, 1.4rem);
+    bottom: clamp(0.8rem, 2vw, 1.3rem);
+    font-family: var(--font-display);
+    font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: #fff;
+    mix-blend-mode: difference;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: none;
   }
 
-  .carousel-arrow:hover {
-    background: var(--ink);
-    border-color: var(--ink);
+  .product:hover img, .product:focus-visible img { transform: scale(calc(var(--zoom, 1) * 1.04)); }
+  .product:hover .product-name,
+  .product:focus-visible .product-name { opacity: 1; transform: translateY(0); }
+
+  .product:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .collection-grid:hover .product:not(:hover) img { opacity: 0.45; }
   }
 
-  .carousel-arrow:hover svg { stroke: #fff; }
-  .carousel-arrow:active { transform: translateY(-50%) scale(0.94); }
-
-  .carousel-arrow svg {
-    width: 16px;
-    height: 16px;
-    stroke: var(--ink);
-    fill: none;
-    stroke-width: 1.5;
-    transition: stroke 0.2s;
+  /* Touch screens can't hover: always show the names */
+  @media (hover: none) {
+    .product-name { opacity: 1; transform: none; }
   }
 
-  .arrow-prev { left: 0; }
-  .arrow-next { right: 0; }
-
-  /* ── DOTS ── */
-  .carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 2.2rem;
+  /* Phones: two columns, the first piece spans both so nine fill the grid evenly */
+  @media (max-width: 700px) {
+    .collection-grid { grid-template-columns: repeat(2, 1fr); }
+    .product:first-child { grid-column: span 2; }
   }
 
-  .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--border);
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: background 0.25s, transform 0.25s;
-  }
-
-  .dot.active {
-    background: var(--ink);
-    transform: scale(1.3);
-  }
-
-  /* ── COUNTER ── */
-  .carousel-counter {
-    text-align: center;
-    margin-top: 1rem;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: var(--ink-light);
-  }
 
   /* ── FOOTER ── */
   footer {
@@ -685,60 +745,118 @@
     margin-bottom: 3.5rem;
   }
 
+  /* An editorial index rather than boxed cards: one row per article between 1px
+     rules, number and category on the left, title and excerpt in the middle, "Read"
+     on the right. Same quiet language as the collection. */
   .articles-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    background: var(--border);
-    gap: 1px;
-    max-width: 1100px;
+    max-width: 1000px;
     margin: 0 auto;
-    box-shadow: 0 4px 32px rgba(0,0,0,0.10), 0 1px 6px rgba(0,0,0,0.06);
+    border-top: 1px solid var(--border);
+    counter-reset: article;
   }
 
   .article-card {
-    background: var(--surface);
-    padding: 2.5rem 2rem;
+    counter-increment: article;
+    display: grid;
+    grid-template-columns: minmax(9rem, 1fr) 3fr auto;
+    grid-template-areas:
+      "cat title   read"
+      "cat excerpt read";
+    column-gap: clamp(1.5rem, 4vw, 3.5rem);
+    row-gap: 0.5rem;
+    align-items: baseline;
+    padding: clamp(1.8rem, 3.5vw, 2.6rem) 0;
+    border-bottom: 1px solid var(--border);
     text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-    transition: background 0.25s;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.16,1,0.3,1);
   }
 
-  .article-card:hover { background: #edecea; }
+  /* Rows arrive one after another */
+  .article-card:nth-child(2) { transition-delay: 0.12s; }
+  .article-card:nth-child(3) { transition-delay: 0.24s; }
+
+  .article-card.visible { opacity: 1; transform: translateY(0); }
+
+  .article-card:focus-visible { outline: 1px solid var(--ink); outline-offset: 6px; }
 
   .article-cat {
+    grid-area: cat;
     font-size: 0.58rem;
     letter-spacing: 0.35em;
     text-transform: uppercase;
     color: var(--ink-light);
   }
 
+  .article-cat::before {
+    content: counter(article, decimal-leading-zero);
+    margin-right: 1.2em;
+    color: var(--ink);
+  }
+
   .article-title {
+    grid-area: title;
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
     font-weight: 300;
     font-style: italic;
     color: var(--ink);
-    letter-spacing: 0.03em;
+    letter-spacing: 0.02em;
     line-height: 1.2;
+    transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
   }
 
+  .article-card:hover .article-title,
+  .article-card:focus-visible .article-title { transform: translateX(8px); }
+
   .article-excerpt {
-    font-size: 0.78rem;
+    grid-area: excerpt;
+    max-width: 52ch;
+    font-size: 0.8rem;
     font-weight: 300;
     color: var(--ink-mid);
     line-height: 1.8;
     letter-spacing: 0.02em;
-    flex: 1;
   }
 
   .article-read {
+    grid-area: read;
+    position: relative;
+    padding-bottom: 4px;
     font-size: 0.62rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--ink);
-    margin-top: 0.5rem;
+  }
+
+  /* Underline draws from the left while the row is hovered */
+  .article-read::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0.2em; /* trailing letter-spacing */
+    bottom: 0;
+    height: 1px;
+    background: var(--ink);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .article-card:hover .article-read::after,
+  .article-card:focus-visible .article-read::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  @media (max-width: 700px) {
+    .article-card {
+      grid-template-columns: 1fr;
+      grid-template-areas: "cat" "title" "excerpt" "read";
+      row-gap: 0.7rem;
+    }
+    .article-read { justify-self: start; margin-top: 0.4rem; }
   }
 
   /* ── ARTICLE PAGE ── */
@@ -815,49 +933,118 @@
     color: var(--ink);
   }
 
+  /* Paragraphs rise into view (class added by article.js, so no-JS pages stay readable) */
+  .article-body p.reveal-p {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 1s ease, transform 1s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .article-body p.reveal-p.visible { opacity: 1; transform: translateY(0); }
+
+  .page-article .scroll-progress { background: var(--ink); }
+
+  .article-hero-cat { animation: modalFadeIn 1s 0.3s ease both; }
+  .article-back { animation: modalFadeIn 1s 0.5s ease both; }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
+    /* Keep the brand on one line: drop the tagline, the language toggle stays */
+    .header-tag { display: none; }
+    .brand-name { white-space: nowrap; }
     .pillars { grid-template-columns: 1fr; }
     .pillar { border-right: none; border-bottom: 1px solid var(--border); }
     .pillar:last-child { border-bottom: none; }
-    .carousel-wrap { padding: 0 3rem; }
     .separator { height: 300px; }
-    .articles-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── REDUCED MOTION ── */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hero-title .char { animation: modalFadeIn 0.8s ease both; }
+    .hero-scroll-arrow { animation: none; }
+    .hero-bg, .chain-stage canvas { transition: none; }
+    .intro-logo, .intro-tagline { animation: modalFadeIn 0.8s ease both; }
+    .intro-line { animation: none; transform: none; }
+    #intro-screen { transition: opacity 0.8s ease; }
+    #intro-screen.fade-out { clip-path: none; opacity: 0; }
+    .pillar-icon .draw { stroke-dasharray: none; transition: none; }
+    .pillar-title, .pillar-text { transform: none; }
+    .separator::after { animation: none; }
+    .separator-headline .reveal-line { letter-spacing: 0.06em; }
+    .product { transform: none; transition: opacity 0.6s ease; }
+    .product img, .product-name { transition: none; }
+    .product-name { transform: none; }
+    .product:hover img, .product:focus-visible img { transform: scale(var(--zoom, 1)); }
+    .modal-body > *, .modal-close { animation: modalFadeIn 0.4s ease both; }
+    .article-card { transform: none; }
+    .article-card:hover .article-title { transform: none; }
   }
 
   /* ── PRODUCT MODAL ── */
-  .slide-img-wrap, .slide-name {
-    cursor: pointer;
-  }
-
   .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
     background: rgba(14,14,13,0.65);
-    z-index: 100;
-    align-items: center;
+    z-index: 300; /* above the fixed header */
+    align-items: flex-start;
     justify-content: center;
+    overflow-y: auto;
     padding: 1.5rem;
     backdrop-filter: blur(4px);
-    animation: modalFadeIn 0.25s ease;
+    animation: overlayIn 0.5s ease both;
   }
 
   .modal-overlay.open { display: flex; }
+
+  /* Closing fades everything out before main.js hides it */
+  .modal-overlay.is-closing { animation: modalFadeOut 0.35s ease both; }
 
   @keyframes modalFadeIn {
     from { opacity: 0; }
     to   { opacity: 1; }
   }
 
-  .modal-card {
-    background: var(--surface);
-    max-width: 420px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    animation: modalSlideUp 0.28s ease;
+  @keyframes modalFadeOut { to { opacity: 0; } }
+
+  /* Background and blur only, so the flying image is never faded with it */
+  @keyframes overlayIn {
+    from { background-color: rgba(14,14,13,0); backdrop-filter: blur(0); }
   }
+
+  /* Editorial detail view: photo and text side by side on the page's own paper colour,
+     thin type and a plain underlined link instead of a filled button. Stacks on phones. */
+  .modal-card {
+    position: relative;
+    background: var(--bg);
+    max-width: 880px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    margin: auto; /* centred when it fits, scrollable from the top when it doesn't */
+    animation: cardIn 0.6s ease both;
+  }
+
+  @keyframes cardIn { from { background-color: rgba(245,244,242,0); } }
+
+  /* Same treatment as the collection photos */
+  .modal-img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(1.08) brightness(0.97);
+  }
+
+  /* Copy and close button follow the image in a short cascade */
+  .modal-close { animation: modalFadeIn 0.5s 0.35s ease both; }
+  .modal-body > * { animation: modalSlideUp 0.7s cubic-bezier(0.16,1,0.3,1) both; }
+  .modal-body > :nth-child(1) { animation-delay: 0.3s; }
+  .modal-body > :nth-child(2) { animation-delay: 0.4s; }
+  .modal-body > :nth-child(3) { animation-delay: 0.5s; }
 
   @keyframes modalSlideUp {
     from { opacity: 0; transform: translateY(16px); }
@@ -865,65 +1052,78 @@
   }
 
   .modal-close {
-    align-self: flex-end;
-    background: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    width: 48px;
+    height: 48px;
+    background: var(--bg);
     border: none;
     cursor: pointer;
-    padding: 0.75rem 0.75rem 0;
-    color: var(--ink-light);
+    color: var(--ink-mid);
+    font-family: var(--font-body);
+    font-weight: 200;
+    font-size: 1.4rem;
     line-height: 1;
-    font-size: 1.1rem;
+    transition: color 0.3s;
   }
 
-  .modal-close:hover { color: var(--ink); }
-
-  .modal-img {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-  }
+  .modal-close:hover, .modal-close:focus-visible { color: var(--ink); }
 
   .modal-body {
-    padding: 1.6rem 2rem 2rem;
+    padding: clamp(2rem, 5vw, 4rem);
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    justify-content: center;
+    gap: 1.2rem;
   }
 
   .modal-name {
     font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 300;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--ink);
   }
 
   .modal-desc {
-    font-size: 0.78rem;
+    font-size: 0.85rem;
     font-weight: 300;
     color: var(--ink-mid);
-    line-height: 1.85;
-    letter-spacing: 0.03em;
-    margin-bottom: 0.6rem;
+    line-height: 1.9;
+    letter-spacing: 0.02em;
+    max-width: 38ch;
   }
 
   .modal-btn {
-    display: inline-block;
-    padding: 0.8rem 2rem;
-    background: var(--ink);
-    color: #fff;
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-top: 0.8rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--ink);
+    color: var(--ink);
     font-family: var(--font-body);
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     text-decoration: none;
-    border: 1px solid var(--ink);
-    transition: background 0.2s, color 0.2s;
-    align-self: flex-start;
   }
 
-  .modal-btn:hover {
-    background: transparent;
-    color: var(--ink);
+  .modal-btn::after {
+    content: '→';
+    letter-spacing: 0;
+    font-size: 0.9rem;
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .modal-btn:hover::after, .modal-btn:focus-visible::after { transform: translateX(5px); }
+
+  @media (max-width: 760px) {
+    .modal-card { max-width: 420px; grid-template-columns: 1fr; }
+    .modal-img { aspect-ratio: 1 / 1; }
+    .modal-body { padding: 1.8rem 1.8rem 2.2rem; gap: 0.9rem; }
   }
