@@ -153,9 +153,14 @@ async function init() {
       return new THREE.Vector3(R * Math.cos(a), R * Math.sin(a) * Math.cos(tilt), R * Math.sin(a) * Math.sin(tilt));
     };
 
-    const pts = [new THREE.Vector3(W * 1.3, V * 0.9, -4)]; // comes in from above, off the top right
-    for (let deg = 10; deg <= 290; deg += 40) pts.push(ring(deg));
-    pts.push(new THREE.Vector3(R * 0.55, -V * 0.7, R * 0.4)); // drops out under the hero
+    // The chain joins the ring at its back right (60°) already travelling the way the
+    // ring runs (counter-clockwise: over the top, down the left, across the front), so
+    // there is no hairpin. Straight links can't follow a tight bend; they overlap and
+    // flicker. Keep every turn in the path wide.
+    const entry = ring(60);
+    const pts = [new THREE.Vector3(entry.x + R * 1.6, entry.y + R * 1.2, entry.z)]; // off the top right
+    for (let deg = 60; deg <= 300; deg += 40) pts.push(ring(deg));
+    pts.push(new THREE.Vector3(R * 0.95, -V * 0.72, R * 0.35)); // drops out under the hero
 
     // Bands: the chain hangs across each one like a real chain, clear of the phrase in
     // the middle. It passes at the same depth as the front of the hero necklace, so the

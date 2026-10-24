@@ -956,6 +956,8 @@
     .pillar { border-right: none; border-bottom: 1px solid var(--border); }
     .pillar:last-child { border-bottom: none; }
     .separator { height: 300px; }
+    /* As large as the phrase can be while still fitting on one line */
+    .separator-headline { font-size: 7.5vw; padding: 0 1rem; }
   }
 
   /* ── REDUCED MOTION ── */
